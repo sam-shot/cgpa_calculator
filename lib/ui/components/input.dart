@@ -16,6 +16,7 @@ class AppTextField extends ConsumerStatefulWidget {
   final bool isPassword;
   final Widget? suffix;
   final Widget? prefix;
+  final TextCapitalization? capitalization;
   final FocusNode? focusNode;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
@@ -39,6 +40,7 @@ class AppTextField extends ConsumerStatefulWidget {
     this.onChanged,
     this.keyboardType,
     this.maxLength,
+    this.capitalization,
     this.maxLines,
     this.minLines,
     this.radius,
@@ -62,6 +64,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
       enabled: !widget.isDisabled,
       onTap: widget.onTap,
       focusNode: widget.focusNode,
+      textCapitalization: widget.capitalization ?? (TextCapitalization.none),
       maxLines: checkIfPassword ? 1 : widget.maxLines ?? 1,
       style: widget.isDisabled
           ? AppTextStyles.medium(16)
@@ -84,8 +87,13 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
           filled: true,
           fillColor: AppColors.white,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(widget.radius ?? 10),
+            borderSide: BorderSide(
+              color: AppColors.black.withOpacity(.3),
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(
+              widget.radius ?? 10,
+            ),
           ),
           border: OutlineInputBorder(
             borderSide: const BorderSide(
