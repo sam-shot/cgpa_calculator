@@ -1,4 +1,5 @@
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
+import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/components/input.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
@@ -47,8 +48,12 @@ class CalculateGPView extends ConsumerWidget {
                           children: [
                             ...data.map((e) => Padding(
                                   padding: const EdgeInsets.only(bottom: 13),
-                                  child:
-                                      GradeRow(data: e, index: data.indexOf(e)),
+                                  child: GradeRow(
+                                    data: e,
+                                    index: data.indexOf(e),
+                                    first: data.indexOf(e) == 0,
+                                    cancellable: data.length > 1,
+                                  ),
                                 )),
                             const Gap(20),
                             AppButton(
@@ -68,7 +73,92 @@ class CalculateGPView extends ConsumerWidget {
               const Gap(20),
               AppButton(
                 text: "Calculate GP",
-                onPressed: () {},
+                onPressed: () {
+                  final data = ref.read(gpController.notifier).calculateGP();
+                  if (data.$1) {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => SizedBox(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Gap(15),
+                              Text(
+                                "Success",
+                                style: AppTextStyles.boldB(18)
+                                    .copyWith(color: Colors.green),
+                              ),
+                              const Gap(20),
+                              ClipOval(
+                                child: Image.asset(
+                                  "confetti".png,
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ),
+                              const Gap(20),
+                              Text(
+                                "Your CGPA is:",
+                                style: AppTextStyles.boldB(16),
+                              ),
+                              const Gap(5),
+                              Text(
+                                data.$2.toString(),
+                                style: AppTextStyles.boldB(26)
+                                    .copyWith(color: AppColors.primary),
+                              ),
+                              const Gap(20),
+                              AppButton(
+                                text: "Close",
+                                onPressed: () => context.pop(),
+                              ),
+                              const Gap(10),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => SizedBox(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Gap(15),
+                              Text(
+                                "Error",
+                                style: AppTextStyles.boldB(18)
+                                    .copyWith(color: Colors.red),
+                              ),
+                              const Gap(20),
+                              Text(
+                                "Please fill in the empty fields",
+                                style: AppTextStyles.boldB(16),
+                              ),
+                              const Gap(20),
+                              AppButton(
+                                text: "Cancel",
+                                onPressed: () => context.pop(),
+                                type: ButtonType.outlined,
+                                color: AppColors.primary,
+                              ),
+                              const Gap(10),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                },
               ),
               const Gap(30),
             ],
@@ -82,11 +172,15 @@ class CalculateGPView extends ConsumerWidget {
 class GradeRow extends ConsumerStatefulWidget {
   final Map<String, dynamic> data;
   final int index;
+  final bool first;
+  final bool cancellable;
 
   const GradeRow({
     super.key,
     required this.data,
     required this.index,
+    required this.first,
+    required this.cancellable,
   });
 
   @override
@@ -101,6 +195,8 @@ class _GradeRowState extends ConsumerState<GradeRow> {
   void initState() {
     super.initState();
     course = TextEditingController(text: widget.data['course'] ?? '');
+    credit = widget.data['credit'];
+    grade = widget.data['grade'];
   }
 
   @override
@@ -112,11 +208,13 @@ class _GradeRowState extends ConsumerState<GradeRow> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Course",
-                style: AppTextStyles.normalB(14),
-              ),
-              const Gap(5),
+              if (widget.first) ...[
+                Text(
+                  "Course",
+                  style: AppTextStyles.normalB(14),
+                ),
+                const Gap(5),
+              ],
               AppTextField(
                 controller: course,
                 hint: "E.g MAT 113",
@@ -132,11 +230,13 @@ class _GradeRowState extends ConsumerState<GradeRow> {
         Expanded(
           child: Column(
             children: [
-              Text(
-                "Credit",
-                style: AppTextStyles.normalB(14),
-              ),
-              const Gap(5),
+              if (widget.first) ...[
+                Text(
+                  "Credit",
+                  style: AppTextStyles.normalB(14),
+                ),
+                const Gap(5),
+              ],
               DropdownButtonFormField(
                 value: credit,
                 items: [1, 2, 3, 4]
@@ -187,11 +287,13 @@ class _GradeRowState extends ConsumerState<GradeRow> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                "Grade",
-                style: AppTextStyles.normalB(14),
-              ),
-              const Gap(5),
+              if (widget.first) ...[
+                Text(
+                  "Grade",
+                  style: AppTextStyles.normalB(14),
+                ),
+                const Gap(5),
+              ],
               DropdownButtonFormField(
                 value: grade,
                 items: ['A', 'B', 'C', 'D', 'E', 'F']
@@ -237,14 +339,16 @@ class _GradeRowState extends ConsumerState<GradeRow> {
             ],
           ),
         ),
-        Center(
-          child: IconButton(
-            onPressed: ()=>ref.read(gpController.notifier).removeCourse(widget.index),
-            icon: const Icon(
-              Icons.close,
+        if (widget.cancellable)
+          Center(
+            child: IconButton(
+              onPressed: () =>
+                  ref.read(gpController.notifier).removeCourse(widget.index),
+              icon: const Icon(
+                Icons.close,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
