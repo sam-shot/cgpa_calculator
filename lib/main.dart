@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const SplashView(),
         theme: ThemeData(
-          textTheme: GoogleFonts.soraTextTheme(),
+          textTheme: GoogleFonts.manropeTextTheme(),
         ),
       ),
     );
