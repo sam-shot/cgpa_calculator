@@ -2,6 +2,7 @@
 
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/views/home/home_view.dart';
+import 'package:cgpa_calculator/ui/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -27,7 +28,7 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
     _screens = [
       const Scaffold(),
       const HomeView(),
-      const Scaffold(),
+      const SettingsView(),
     ];
   }
 
@@ -47,13 +48,13 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(15),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(8),
             child: BottomNavigationBar(
               currentIndex: currentIndex,
               elevation: 0,
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: AppColors.black.withOpacity(0.1),
+              backgroundColor: AppColors.primary.withOpacity(0.1),
               selectedItemColor: AppColors.primary,
               unselectedItemColor: AppColors.black,
               type: BottomNavigationBarType.fixed,

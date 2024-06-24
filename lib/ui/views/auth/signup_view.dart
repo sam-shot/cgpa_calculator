@@ -1,8 +1,8 @@
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/styles/typography.dart';
-import 'package:cgpa_calculator/ui/views/components/button.dart';
-import 'package:cgpa_calculator/ui/views/components/input.dart';
+import 'package:cgpa_calculator/ui/components/button.dart';
+import 'package:cgpa_calculator/ui/components/input.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

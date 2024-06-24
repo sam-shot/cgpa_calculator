@@ -38,6 +38,8 @@ dependencies:
   flutter_riverpod:
   google_fonts:
   flutter_screenutil:
+  hive_flutter: ^1.1.0
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:

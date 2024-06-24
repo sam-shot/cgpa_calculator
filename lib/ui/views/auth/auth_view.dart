@@ -3,7 +3,7 @@ import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/views/auth/login_view.dart';
 import 'package:cgpa_calculator/ui/views/auth/signup_view.dart';
-import 'package:cgpa_calculator/ui/views/components/button.dart';
+import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

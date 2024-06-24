@@ -18,4 +18,19 @@ class AppTextStyles {
         fontSize: size.sp.toDouble(),
         fontWeight: FontWeight.w500,
       );
+  static normalB(num size) => TextStyle(
+        color: AppColors.black,
+        fontSize: size.sp.toDouble(),
+        fontWeight: FontWeight.normal,
+      );
+  static boldB(num size) => TextStyle(
+        color: AppColors.black,
+        fontSize: size.sp.toDouble(),
+        fontWeight: FontWeight.w700,
+      );
+  static mediumB(num size) => TextStyle(
+        color: AppColors.black,
+        fontSize: size.sp.toDouble(),
+        fontWeight: FontWeight.w500,
+      );
 }
