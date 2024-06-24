@@ -1,15 +1,17 @@
 import 'package:cgpa_calculator/core/app/locator.dart';
 import 'package:cgpa_calculator/core/services/db_service.dart';
+import 'package:cgpa_calculator/ui/views/current_gp/history_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final gpController =
     StateNotifierProvider<GpProvider, AsyncValue<List<Map<String, dynamic>>>>(
         (ref) {
-  return GpProvider();
+  return GpProvider(ref);
 });
 
 class GpProvider extends StateNotifier<AsyncValue<List<Map<String, dynamic>>>> {
-  GpProvider() : super(const AsyncData([]));
+  final Ref ref;
+  GpProvider(this.ref) : super(const AsyncData([]));
   final _db = locator<DBService>();
   void addCourse() {
     state = AsyncData(List.from(state.value!)
@@ -81,6 +83,9 @@ class GpProvider extends StateNotifier<AsyncValue<List<Map<String, dynamic>>>> {
       }
       _db.save("cgpa", (gradePoints / totalCredits).toStringAsFixed(2));
       _db.save("credit", totalCredits.toInt().toString());
+      ref
+          .read(historyController.notifier)
+          .addHistory((gradePoints / totalCredits).toStringAsFixed(2));
       return (true, (gradePoints / totalCredits).toStringAsFixed(2));
     }
   }

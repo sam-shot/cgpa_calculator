@@ -5,23 +5,26 @@ import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:cgpa_calculator/ui/views/auth/auth_view.dart';
+import 'package:cgpa_calculator/ui/views/current_gp/history_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends ConsumerStatefulWidget {
   const SplashView({super.key});
 
   @override
-  State<SplashView> createState() => _SplashViewState();
+  ConsumerState<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _SplashViewState extends ConsumerState<SplashView> {
   bool moved = false;
 
   @override
   Widget build(BuildContext context) {
     if (!moved) {
+      Future(() => ref.read(historyController.notifier).init());
       _move(context);
     }
     return Scaffold(
