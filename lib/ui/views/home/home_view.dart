@@ -1,6 +1,5 @@
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
-import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/calculate_gp_view.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/gp_provider.dart';
 import 'package:cgpa_calculator/ui/views/current_gp/current_gp_view.dart';
@@ -23,14 +22,12 @@ class HomeView extends ConsumerWidget {
               const Gap(30),
               Text(
                 "Welcome, Dele",
-                style: AppTextStyles.bold(22).copyWith(
-                  color: AppColors.primary,
-                ),
+                style: context.priBold22,
               ),
               const Gap(50),
               Text(
                 "Quick Actions",
-                style: AppTextStyles.boldB(18),
+                style: context.bold16,
               ),
               const Gap(20),
               Row(
@@ -102,7 +99,7 @@ class HomeTile extends StatelessWidget {
             width: double.infinity,
             height: 180,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 151, 194, 255).withOpacity(0.7),
+              color: context.primaryColor.shade100,
               borderRadius: BorderRadius.circular(5),
             ),
             child: Stack(
@@ -132,13 +129,13 @@ class HomeTile extends StatelessWidget {
                       children: [
                         Icon(
                           activeIcon,
-                          color: AppColors.primary,
+                          color: context.primaryColor,
                           size: 40,
                         ),
                         const Gap(10),
                         Text(
                           label,
-                          style: AppTextStyles.boldB(15),
+                          style: context.bold16.copyWith(fontSize: 15),
                         ),
                       ],
                     ),

@@ -3,7 +3,6 @@ import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/core/services/db_service.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
-import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -23,41 +22,38 @@ class ProfileView extends ConsumerWidget {
               const Gap(20),
               IconButton(
                 onPressed: () => context.pop(),
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_rounded,
-                  color: AppColors.primary,
+                  color: context.primaryColor,
                 ),
               ),
               const Gap(10),
               Text(
                 "Profile",
-                style: AppTextStyles.bold(22).copyWith(
-                  color: AppColors.primary,
-                ),
+                style: context.priBold22,
               ),
               const Gap(50),
               Container(
                 padding: const EdgeInsets.all(10),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.2),
+                    color: context.primaryColor.shade100,
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Samuel Ademujimi",
-                      style: AppTextStyles.boldB(22),
+                      style: context.bold22,
                     ),
                     const Gap(10),
                     Text(
                       "Current CGPA ",
-                      style: AppTextStyles.boldB(16),
+                      style: context.normal16,
                     ),
                     Text(
                       locator<DBService>().get("cgpa") ?? "--",
-                      style: AppTextStyles.boldB(30)
-                          .copyWith(color: AppColors.primary),
+                      style: context.priBold35,
                     ),
                   ],
                 ),
@@ -65,7 +61,7 @@ class ProfileView extends ConsumerWidget {
               const Gap(20),
               Text(
                 "samshotmedia01@gmail.com ",
-                style: AppTextStyles.mediumB(16),
+                style: context.medium16,
               ),
               const Spacer(),
               AppButton(

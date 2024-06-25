@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/views/home/home_view.dart';
 import 'package:cgpa_calculator/ui/views/settings/settings_view.dart';
@@ -36,7 +37,7 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (currentIndex != 0) {
+        if (currentIndex != 1) {
           goToScreen(1);
           return false;
         } else {
@@ -54,16 +55,16 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
               elevation: 0,
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: AppColors.primary.withOpacity(0.1),
-              selectedItemColor: AppColors.primary,
+              backgroundColor: context.primaryColor.shade100.withOpacity(.5),
+              selectedItemColor: context.primaryColor,
               unselectedItemColor: AppColors.black,
               type: BottomNavigationBarType.fixed,
               onTap: (value) {
                 goToScreen(value);
               },
-              items: const [
+              items: [
                 BottomNavigationBarItem(
-                  icon: NavBarItem(
+                  icon: const NavBarItem(
                     iconPath: Icons.info_outline_rounded,
                     label: "Info",
                   ),
@@ -71,12 +72,12 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
                     iconPath: Icons.info_rounded,
                     label: "Info",
                     isActive: true,
-                    color: AppColors.primary,
+                    color: context.primaryColor,
                   ),
                   label: "",
                 ),
                 BottomNavigationBarItem(
-                  icon: NavBarItem(
+                  icon: const NavBarItem(
                     iconPath: Icons.home_rounded,
                     label: "Home",
                   ),
@@ -84,12 +85,12 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
                     iconPath: Icons.home_rounded,
                     label: "Home",
                     isActive: true,
-                    color: AppColors.primary,
+                    color: context.primaryColor,
                   ),
                   label: "",
                 ),
                 BottomNavigationBarItem(
-                  icon: NavBarItem(
+                  icon: const NavBarItem(
                     iconPath: Icons.settings_outlined,
                     label: "Settings",
                   ),
@@ -97,7 +98,7 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
                     iconPath: Icons.settings,
                     label: "Settings",
                     isActive: true,
-                    color: AppColors.primary,
+                    color: context.primaryColor,
                   ),
                   label: "",
                 ),
@@ -138,7 +139,13 @@ class NavBarItem extends ConsumerWidget {
           iconPath,
           // ignore: deprecated_member_use
           color: color ??
-              (isActive ? AppColors.black : AppColors.black.withOpacity(0.3)),
+              (isActive
+                  ? AppColors.black
+                  : Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .color!
+                      .withOpacity(0.3)),
           size: 20,
         ),
         const Gap(3),
@@ -147,7 +154,13 @@ class NavBarItem extends ConsumerWidget {
           style: TextStyle(
             fontSize: 14,
             color: color ??
-                (isActive ? AppColors.black : AppColors.black.withOpacity(0.3)),
+                (isActive
+                    ? AppColors.black
+                    : Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .color!
+                        .withOpacity(0.3)),
             fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
