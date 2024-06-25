@@ -2,6 +2,7 @@
 
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
+import 'package:cgpa_calculator/ui/views/current_gp/history_provider.dart';
 import 'package:cgpa_calculator/ui/views/home/home_view.dart';
 import 'package:cgpa_calculator/ui/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
       const HomeView(),
       const SettingsView(),
     ];
+    Future(() => ref.read(historyController.notifier).init());
   }
 
   @override

@@ -100,7 +100,7 @@ class CurrentGpView extends ConsumerWidget {
                       data: (data) => ListView.builder(
                         itemCount: data.length,
                         itemBuilder: (context, index) => HistoryItem(
-                          cgpa: data.reversed.toList()[index]['cgpa'],
+                          cgpa: data[index]['cgpa'].toString(),
                           time: DateTime.parse(data[index]['time']).toString(),
                         ),
                       ),

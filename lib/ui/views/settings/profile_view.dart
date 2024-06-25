@@ -1,5 +1,6 @@
 import 'package:cgpa_calculator/core/app/locator.dart';
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
+import 'package:cgpa_calculator/core/services/db_service.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/views/auth/auth_view.dart';
@@ -54,7 +55,7 @@ class ProfileView extends ConsumerWidget {
                       style: context.normal16,
                     ),
                     Text(
-                      (ref.read(userProvider)?.cgpa ?? 0.00).toString(),
+                      locator<DBService>().get("cgpa") ?? "--",
                       style: context.priBold35,
                     ),
                   ],
@@ -69,6 +70,7 @@ class ProfileView extends ConsumerWidget {
               AppButton(
                 text: "Logout",
                 onPressed: () {
+                  locator<DBService>().clear();
                   locator<SupabaseClient>().auth.signOut();
                   context.go(const AuthView());
                 },

@@ -5,8 +5,6 @@ import 'dart:async';
 import 'package:cgpa_calculator/core/app/locator.dart';
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
-import 'package:cgpa_calculator/ui/styles/colors.dart';
-import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:cgpa_calculator/ui/views/auth/auth_view.dart';
 import 'package:cgpa_calculator/ui/views/bottom_nav/bottom_nav.dart';
 import 'package:cgpa_calculator/ui/views/home/controller/home_controller.dart';
@@ -24,39 +22,23 @@ class SplashView extends ConsumerStatefulWidget {
 }
 
 class _SplashViewState extends ConsumerState<SplashView> {
-  late StreamSubscription authSubscription;
   @override
   void initState() {
     super.initState();
     _navigateIfAuthenticated();
   }
 
-  @override
-  void dispose() {
-    authSubscription.cancel();
-    super.dispose();
-  }
-
   void _navigateIfAuthenticated() {
-    Future(() {
-      authSubscription = locator<SupabaseClient>()
-          .auth
-          .onAuthStateChange
-          .listen((session) async {
-        final user = session.session?.user;
-        if (!mounted) {
-          authSubscription.cancel();
-          return;
-        }
-        if (user != null) {
-          await ref.read(homeController).loadUser();
-          context.replace(BottomNavWidget(
-            index: 1,
-          ));
-        } else {
-          context.replace(const AuthView());
-        }
-      });
+    Future(() async {
+      final session = locator<SupabaseClient>().auth.currentSession;
+      if (session == null) {
+        context.replace(const AuthView());
+      } else {
+        await ref.read(homeController).loadUser();
+        context.replace(BottomNavWidget(
+          index: 1,
+        ));
+      }
     });
   }
 
@@ -67,7 +49,6 @@ class _SplashViewState extends ConsumerState<SplashView> {
     //   _move(context);
     // }
     return Scaffold(
-      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -84,7 +65,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
                 alignment: Alignment.center,
                 child: Text(
                   "EDUCATIONAL\nTECHNOLOGY",
-                  style: AppTextStyles.bold(35),
+                  style: context.priBold35,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -93,13 +74,13 @@ class _SplashViewState extends ConsumerState<SplashView> {
                 alignment: Alignment.center,
                 child: Text(
                   " UNIVERSITY OF ILORIN\nGP CALCULATOR",
-                  style: AppTextStyles.bold(20),
+                  style: context.priBold20,
                   textAlign: TextAlign.center,
                 ),
               ),
               const Gap(20),
               Container(
-                color: AppColors.white,
+                color: context.primaryColor,
                 height: 10,
               )
             ],

@@ -2,7 +2,6 @@ import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/components/input.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
-import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:cgpa_calculator/ui/views/auth/controller/auth_controller.dart';
 import 'package:cgpa_calculator/ui/views/auth/model/login_model.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -35,42 +33,39 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   onPressed: () => context.pop(),
                   icon: const Icon(
                     Icons.arrow_back_rounded,
-                    color: AppColors.white,
                   ),
                 ),
-                const Gap(70),
-                Align(
-                  child: Text(
-                    "LOGIN",
-                    style: AppTextStyles.bold(22),
-                  ),
+                const Gap(20),
+                Text(
+                  "LOGIN",
+                  style: context.bold22,
                 ),
-                const Gap(70),
+                const Gap(50),
                 Text(
                   "Email",
-                  style: AppTextStyles.normal(18),
+                  style: context.normal14,
                 ),
                 const Gap(5),
                 AppTextField(
                   controller: _emailController,
+                  bgColor: Colors.transparent,
                   hint: "johndoe@gmail.com",
                 ),
                 const Gap(20),
                 Text(
                   "Password",
-                  style: AppTextStyles.normal(18),
+                  style: context.normal14,
                 ),
                 const Gap(5),
                 AppTextField(
                   controller: _passwordController,
+                  bgColor: Colors.transparent,
                   hint: "********",
                   isPassword: true,
                 ),
                 const Gap(120),
                 AppButton(
                   text: "Login",
-                  color: AppColors.white,
-                  type: ButtonType.outlined,
                   loading: ref.watch(authController).loading,
                   onPressed: () => ref.read(authController).login(LoginModel(
                       email: _emailController.text,

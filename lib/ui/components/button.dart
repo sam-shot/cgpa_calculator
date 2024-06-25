@@ -1,3 +1,4 @@
+import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class AppButton extends ConsumerWidget {
       elevation: 0,
       disabledElevation: 0,
       disabledColor:
-          color?.withOpacity(0.2) ?? AppColors.white.withOpacity(0.2),
+          color?.withOpacity(0.4) ?? context.primaryColor.withOpacity(0.4),
       highlightElevation: 0,
       shape: type == ButtonType.outlined
           ? RoundedRectangleBorder(

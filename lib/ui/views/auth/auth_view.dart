@@ -1,9 +1,9 @@
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
+import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/views/auth/login_view.dart';
 import 'package:cgpa_calculator/ui/views/auth/signup_view.dart';
-import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -14,7 +14,6 @@ class AuthView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -31,14 +30,14 @@ class AuthView extends StatelessWidget {
               ),
               AppButton(
                 text: "Login",
-                color: AppColors.white,
-                textColor: AppColors.primary,
+                color: context.primaryColor,
+                textColor: AppColors.white,
                 onPressed: () => context.push(const LoginView()),
               ),
               const Gap(10),
               AppButton(
                 text: "Sign up",
-                color: AppColors.white,
+                color: context.primaryColor,
                 type: ButtonType.outlined,
                 onPressed: () => context.push(const SignupView()),
               ),

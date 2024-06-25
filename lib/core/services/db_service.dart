@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -10,6 +9,9 @@ class DBService {
   }
 
   void saveHistory(List<Map<String, dynamic>> data) {
+    for (var item in data) {
+      item['time'] = item['time'].toString();
+    }
     final json = jsonEncode(data);
     save("_db-history", json);
   }
@@ -32,7 +34,6 @@ class DBService {
 
   List<Map<String, dynamic>> getHistory() {
     final rawData = get("_db-history");
-    log(rawData.toString());
     if (rawData == null) {
       List<Map<String, dynamic>> result = [];
       return result;
@@ -41,7 +42,7 @@ class DBService {
       List<Map<String, dynamic>> result = [];
       for (var single in data) {
         result.add(
-          {"cgpa": single["cgpa"], "time":single['time']},
+          {"cgpa": single["cgpa"],"inDb": single["inDb"], "time": single['time']},
         );
       }
       return result;

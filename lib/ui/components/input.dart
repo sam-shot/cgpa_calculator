@@ -91,7 +91,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
           fillColor: widget.bgColor ?? AppColors.white,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: AppColors.black.withOpacity(.3),
+              color: context.bold16.color!.withOpacity(.3),
               width: 1,
             ),
             borderRadius: BorderRadius.circular(
@@ -99,19 +99,19 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
             ),
           ),
           border: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppColors.primary,
+            borderSide: BorderSide(
+              color: context.primaryColor,
               width: 0,
             ),
             borderRadius: BorderRadius.circular(widget.radius ?? 10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.primary, width: 1),
+            borderSide: BorderSide(color: context.primaryColor, width: 1),
             borderRadius: BorderRadius.circular(widget.radius ?? 10),
           ),
           disabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppColors.primary,
+            borderSide: BorderSide(
+              color: context.primaryColor,
               width: 0,
             ),
             borderRadius: BorderRadius.circular(widget.radius ?? 10),
@@ -142,7 +142,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                     isObscure
                         ? Icons.visibility_outlined
                         : Icons.visibility_off_outlined,
-                    color: AppColors.black.withOpacity(0.5),
+                    color: context.bold16.color!.withOpacity(0.5),
                   ),
                 )
               : widget.suffix != null
