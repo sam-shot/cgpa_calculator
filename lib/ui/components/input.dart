@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class AppTextField extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final bool isPassword;
   final Widget? suffix;
+  final Color? bgColor;
   final Widget? prefix;
   final TextCapitalization? capitalization;
   final FocusNode? focusNode;
@@ -38,6 +40,7 @@ class AppTextField extends ConsumerStatefulWidget {
     this.suffix,
     this.prefix,
     this.onChanged,
+    this.bgColor,
     this.keyboardType,
     this.maxLength,
     this.capitalization,
@@ -69,7 +72,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
       style: widget.isDisabled
           ? AppTextStyles.medium(16)
               .copyWith(color: AppColors.black.withOpacity(0.3))
-          : AppTextStyles.medium(16).copyWith(color: AppColors.black),
+          : context.medium16,
       obscureText: checkIfPassword ? isObscure : false,
       controller: widget.controller,
       maxLength: widget.maxLength,
@@ -85,7 +88,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
           hintText: widget.hint,
           contentPadding: const EdgeInsets.all(10),
           filled: true,
-          fillColor: AppColors.white,
+          fillColor: widget.bgColor ?? AppColors.white,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: AppColors.black.withOpacity(.3),

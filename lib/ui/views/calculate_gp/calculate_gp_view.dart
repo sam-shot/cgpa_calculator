@@ -2,7 +2,6 @@ import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/components/input.dart';
-import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/styles/typography.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/gp_provider.dart';
 import 'package:flutter/material.dart';
@@ -24,21 +23,21 @@ class CalculateGPView extends ConsumerWidget {
               const Gap(20),
               IconButton(
                 onPressed: () => context.pop(),
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_rounded,
-                  color: AppColors.primary,
+                  color: context.primaryColor,
                 ),
               ),
               const Gap(10),
               Text(
                 "Calculate GP",
                 style: AppTextStyles.bold(22).copyWith(
-                  color: AppColors.primary,
+                  color: context.primaryColor,
                 ),
               ),
               Text(
                 "Note: A=5, B=4, C=3, D=2, E=1, F=0",
-                style: AppTextStyles.normalB(14),
+                style: context.normal14,
               ),
               const Gap(40),
               ref.watch(gpController).when(
@@ -59,7 +58,7 @@ class CalculateGPView extends ConsumerWidget {
                             AppButton(
                               text: "Add Course",
                               type: ButtonType.outlined,
-                              color: AppColors.primary,
+                              color: context.primaryColor,
                               onPressed: () =>
                                   ref.read(gpController.notifier).addCourse(),
                             ),
@@ -89,8 +88,7 @@ class CalculateGPView extends ConsumerWidget {
                               const Gap(15),
                               Text(
                                 "Success",
-                                style: AppTextStyles.boldB(18)
-                                    .copyWith(color: Colors.green),
+                                style: context.bold18,
                               ),
                               const Gap(20),
                               ClipOval(
@@ -103,13 +101,13 @@ class CalculateGPView extends ConsumerWidget {
                               const Gap(20),
                               Text(
                                 "Your CGPA is:",
-                                style: AppTextStyles.boldB(16),
+                                style: context.bold16,
                               ),
                               const Gap(5),
                               Text(
                                 data.$2.toString(),
                                 style: AppTextStyles.boldB(26)
-                                    .copyWith(color: AppColors.primary),
+                                    .copyWith(color: context.primaryColor),
                               ),
                               const Gap(20),
                               AppButton(
@@ -149,7 +147,7 @@ class CalculateGPView extends ConsumerWidget {
                                 text: "Cancel",
                                 onPressed: () => context.pop(),
                                 type: ButtonType.outlined,
-                                color: AppColors.primary,
+                                color: context.primaryColor,
                               ),
                               const Gap(10),
                             ],
@@ -211,12 +209,13 @@ class _GradeRowState extends ConsumerState<GradeRow> {
               if (widget.first) ...[
                 Text(
                   "Course",
-                  style: AppTextStyles.normalB(14),
+                  style: context.normal14,
                 ),
                 const Gap(5),
               ],
               AppTextField(
                 controller: course,
+                bgColor: Colors.transparent,
                 hint: "E.g MAT 113",
                 capitalization: TextCapitalization.characters,
                 onChanged: (e) {
@@ -233,31 +232,30 @@ class _GradeRowState extends ConsumerState<GradeRow> {
               if (widget.first) ...[
                 Text(
                   "Credit",
-                  style: AppTextStyles.normalB(14),
+                  style: context.normal14,
                 ),
                 const Gap(5),
               ],
               DropdownButtonFormField(
                 value: credit,
-                items: [1, 2, 3, 4]
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                     .map((e) => DropdownMenuItem(
                           value: e,
-                          child:
-                              Text("$e unit", style: AppTextStyles.normalB(17)),
+                          child: Text("$e unit", style: context.normal16),
                         ))
                     .toList(),
                 padding: EdgeInsets.zero,
                 icon: const SizedBox(),
                 hint: Text(
                   "3 Unit",
-                  style: AppTextStyles.normalB(17)
-                      .copyWith(color: AppColors.black.withOpacity(0.5)),
+                  style: context.normal16.copyWith(
+                      color: context.normal16.color!.withOpacity(0.5)),
                 ),
                 decoration: InputDecoration(
                   isDense: true,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppColors.black.withOpacity(.3),
+                      color: context.normal16.color!.withOpacity(.3),
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(
@@ -265,8 +263,8 @@ class _GradeRowState extends ConsumerState<GradeRow> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.primary,
+                    borderSide: BorderSide(
+                      color: context.primaryColor,
                       width: 0,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -290,7 +288,7 @@ class _GradeRowState extends ConsumerState<GradeRow> {
               if (widget.first) ...[
                 Text(
                   "Grade",
-                  style: AppTextStyles.normalB(14),
+                  style: context.normal14,
                 ),
                 const Gap(5),
               ],
@@ -299,22 +297,22 @@ class _GradeRowState extends ConsumerState<GradeRow> {
                 items: ['A', 'B', 'C', 'D', 'E', 'F']
                     .map((e) => DropdownMenuItem(
                           value: e,
-                          child: Text(e, style: AppTextStyles.normalB(17)),
+                          child: Text(e, style: context.normal16),
                         ))
                     .toList(),
                 padding: EdgeInsets.zero,
                 icon: const SizedBox(),
                 hint: Text(
                   "E.g A",
-                  style: AppTextStyles.normalB(17)
-                      .copyWith(color: AppColors.black.withOpacity(0.5)),
+                  style: context.normal16.copyWith(
+                      color: context.normal16.color!.withOpacity(0.5)),
                   overflow: TextOverflow.ellipsis,
                 ),
                 decoration: InputDecoration(
                   isDense: true,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppColors.black.withOpacity(.3),
+                      color: context.normal16.color!.withOpacity(.3),
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(
@@ -322,8 +320,8 @@ class _GradeRowState extends ConsumerState<GradeRow> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.primary,
+                    borderSide: BorderSide(
+                      color: context.primaryColor,
                       width: 0,
                     ),
                     borderRadius: BorderRadius.circular(10),
