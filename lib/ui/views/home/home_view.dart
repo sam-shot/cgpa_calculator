@@ -3,6 +3,7 @@ import 'package:cgpa_calculator/ui/styles/colors.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/calculate_gp_view.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/gp_provider.dart';
 import 'package:cgpa_calculator/ui/views/current_gp/current_gp_view.dart';
+import 'package:cgpa_calculator/ui/views/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -21,7 +22,7 @@ class HomeView extends ConsumerWidget {
             children: [
               const Gap(30),
               Text(
-                "Welcome, Dele",
+                "Welcome, ${ref.read(userProvider)!.fullName ?? "--"}",
                 style: context.priBold22,
               ),
               const Gap(50),
@@ -102,46 +103,48 @@ class HomeTile extends StatelessWidget {
               color: context.primaryColor.shade100,
               borderRadius: BorderRadius.circular(5),
             ),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Transform.translate(
-                    offset: const Offset(40, -30),
-                    child: Icon(
-                      backgroundIcon,
-                      size: 150,
-                      color: AppColors.white.withOpacity(0.3),
+            child: ClipRRect(
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Transform.translate(
+                      offset: const Offset(40, -30),
+                      child: Icon(
+                        backgroundIcon,
+                        size: 150,
+                        color: AppColors.white.withOpacity(0.3),
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          activeIcon,
-                          color: context.primaryColor,
-                          size: 40,
-                        ),
-                        const Gap(10),
-                        Text(
-                          label,
-                          style: context.bold16.copyWith(fontSize: 15),
-                        ),
-                      ],
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            activeIcon,
+                            color: context.primaryColor,
+                            size: 40,
+                          ),
+                          const Gap(10),
+                          Text(
+                            label,
+                            style: context.bold16.copyWith(fontSize: 15),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

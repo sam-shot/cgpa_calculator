@@ -20,6 +20,15 @@ extension Navigation on BuildContext {
       CupertinoPageRoute(builder: (context) => page),
     );
   }
+
+  go<T extends Object>(Widget page) {
+    return Navigator.pushAndRemoveUntil(
+      this,
+      CupertinoPageRoute(builder: (context) => page),
+      (Route<dynamic> route) =>
+          route is! T, 
+    );
+  }
 }
 
 extension UIThemeExtension on BuildContext {
@@ -43,5 +52,8 @@ extension UIThemeExtension on BuildContext {
   TextStyle get priBold22 => Theme.of(this).primaryTextTheme.titleMedium!;
   TextStyle get priBold35 => Theme.of(this).primaryTextTheme.titleLarge!;
 
-  MaterialColor get primaryColor => Theme.of(this).brightness == Brightness.light ? AppColors.primary :AppColors.primaryDark;
+  MaterialColor get primaryColor =>
+      Theme.of(this).brightness == Brightness.light
+          ? AppColors.primary
+          : AppColors.primaryDark;
 }

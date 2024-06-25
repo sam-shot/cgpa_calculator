@@ -34,7 +34,7 @@ class AppButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialButton(
-      onPressed: disabled! ? null : onPressed,
+      onPressed: disabled! ? null : loading! ? null: onPressed,
       elevation: 0,
       disabledElevation: 0,
       disabledColor:
@@ -56,7 +56,15 @@ class AppButton extends ConsumerWidget {
       minWidth: width == ButtonWidth.full ? double.infinity : 5,
       height: 50,
       child: loading!
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: SizedBox(
+                width: 17,
+                height: 17,
+                child: CircularProgressIndicator(
+                  color: textColor ?? color ?? Colors.white.withOpacity(.9),
+                ),
+              ),
+            )
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,

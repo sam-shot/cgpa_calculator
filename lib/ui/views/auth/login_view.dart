@@ -1,20 +1,22 @@
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
-import 'package:cgpa_calculator/ui/styles/colors.dart';
-import 'package:cgpa_calculator/ui/styles/typography.dart';
-import 'package:cgpa_calculator/ui/views/bottom_nav/bottom_nav.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/components/input.dart';
+import 'package:cgpa_calculator/ui/styles/colors.dart';
+import 'package:cgpa_calculator/ui/styles/typography.dart';
+import 'package:cgpa_calculator/ui/views/auth/controller/auth_controller.dart';
+import 'package:cgpa_calculator/ui/views/auth/model/login_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
@@ -69,11 +71,10 @@ class _LoginViewState extends State<LoginView> {
                   text: "Login",
                   color: AppColors.white,
                   type: ButtonType.outlined,
-                  onPressed: () => context.push(
-                    BottomNavWidget(
-                      index: 1,
-                    ),
-                  ),
+                  loading: ref.watch(authController).loading,
+                  onPressed: () => ref.read(authController).login(LoginModel(
+                      email: _emailController.text,
+                      password: _passwordController.text)),
                 ),
                 const Gap(50),
               ],
