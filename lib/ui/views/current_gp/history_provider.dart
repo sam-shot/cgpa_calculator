@@ -38,7 +38,7 @@ class HistoryProvider
 
   void init() async {
     final data = _db.getHistory();
-    data.sort((a, b) => a['time'].compareTo(b['time']));
+    data.sort((a, b) => b['time'].compareTo(a['time']));
     state = AsyncData(data);
     _sync(data);
   }

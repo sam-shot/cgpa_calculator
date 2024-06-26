@@ -19,7 +19,10 @@ class HomeController extends ChangeNotifier {
 
   Future<void> loadUser() async {
     try {
-      final res = await _api.from("Profiles").select();
+      final res = await _api
+          .from("Profiles")
+          .select()
+          .timeout(const Duration(seconds: 5));
       if (res.isNotEmpty) {
         final data = UserModel.fromJson(res.first);
         ref.read(userProvider.notifier).update((state) => data);

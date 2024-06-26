@@ -32,6 +32,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
     Future(() async {
       final session = locator<SupabaseClient>().auth.currentSession;
       if (session == null) {
+        await Future.delayed(const Duration(seconds: 2));
         context.replace(const AuthView());
       } else {
         await ref.read(homeController).loadUser();

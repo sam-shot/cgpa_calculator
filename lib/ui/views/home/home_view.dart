@@ -1,5 +1,6 @@
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
+import 'package:cgpa_calculator/ui/views/advise_view/advice_view.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/calculate_gp_view.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/gp_provider.dart';
 import 'package:cgpa_calculator/ui/views/current_gp/current_gp_view.dart';
@@ -7,6 +8,7 @@ import 'package:cgpa_calculator/ui/views/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -17,59 +19,68 @@ class HomeView extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Gap(30),
-              Text(
-                "Welcome, ${ref.read(userProvider)!.fullName ?? "--"}",
-                style: context.priBold22,
-              ),
-              const Gap(50),
-              Text(
-                "Quick Actions",
-                style: context.bold16,
-              ),
-              const Gap(20),
-              Row(
-                children: [
-                  HomeTile(
-                    activeIcon: Icons.calculate,
-                    backgroundIcon: Icons.calculate_outlined,
-                    label: "Calculate GP",
-                    onTap: () {
-                      ref.read(gpController.notifier).reset();
-                      context.push(const CalculateGPView());
-                    },
-                  ),
-                  const Gap(10),
-                  HomeTile(
-                    activeIcon: Icons.bar_chart,
-                    backgroundIcon: Icons.bar_chart_outlined,
-                    label: "View Current GP",
-                    onTap: () {
-                      context.push(const CurrentGpView());
-                    },
-                  ),
-                ],
-              ),
-              const Gap(10),
-              const Row(
-                children: [
-                  HomeTile(
-                    activeIcon: Icons.calculate,
-                    backgroundIcon: Icons.calculate_outlined,
-                    label: "Calculate GP",
-                  ),
-                  Gap(10),
-                  HomeTile(
-                    activeIcon: Icons.calculate,
-                    backgroundIcon: Icons.calculate_outlined,
-                    label: "Calculate GP",
-                  ),
-                ],
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Gap(30),
+                Text(
+                  "Welcome, ${ref.read(userProvider)!.fullName ?? "--"}",
+                  style: context.priBold22,
+                ),
+                const Gap(50),
+                Text(
+                  "Quick Actions",
+                  style: context.bold16,
+                ),
+                const Gap(20),
+                Row(
+                  children: [
+                    HomeTile(
+                      activeIcon: Icons.calculate,
+                      backgroundIcon: Icons.calculate_outlined,
+                      label: "Calculate GP",
+                      onTap: () {
+                        ref.read(gpController.notifier).reset();
+                        context.push(const CalculateGPView());
+                      },
+                    ),
+                    const Gap(10),
+                    HomeTile(
+                      activeIcon: Icons.bar_chart,
+                      backgroundIcon: Icons.bar_chart_outlined,
+                      label: "View Current GP & History",
+                      onTap: () {
+                        context.push(const CurrentGpView());
+                      },
+                    ),
+                  ],
+                ),
+                const Gap(10),
+                Row(
+                  children: [
+                    HomeTile(
+                      activeIcon: Icons.people_alt_rounded,
+                      backgroundIcon: Icons.people_alt_outlined,
+                      label: "Advice",
+                      onTap: () {
+                        context.push(const AdviceView());
+                      },
+                    ),
+                    const Gap(10),
+                    HomeTile(
+                      activeIcon: Icons.share_rounded,
+                      backgroundIcon: Icons.share_outlined,
+                      label: "Share",
+                      onTap: () {
+                        Share.share(
+                            'Hey there, looking for the best CGPA caluculator out there? this is your best bet, check this out https://link_to_to_when_uploaded_to_play_store');
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
