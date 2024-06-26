@@ -1,5 +1,6 @@
 import 'package:cgpa_calculator/core/app/locator.dart';
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
+import 'package:cgpa_calculator/core/extensions/datetime.extensions.dart';
 import 'package:cgpa_calculator/core/services/db_service.dart';
 import 'package:cgpa_calculator/ui/views/current_gp/history_provider.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,8 @@ class CurrentGpView extends ConsumerWidget {
                         itemCount: data.length,
                         itemBuilder: (context, index) => HistoryItem(
                           cgpa: data[index]['cgpa'].toString(),
-                          time: DateTime.parse(data[index]['time']).toString(),
+                          time:
+                              "${DateTime.parse(data[index]['time']).getTimeOnly} ${DateTime.parse(data[index]['time']).getFullDate}",
                         ),
                       ),
                       error: (error, stackTrace) => const Text("data"),
