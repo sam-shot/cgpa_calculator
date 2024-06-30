@@ -2,9 +2,11 @@ import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/core/extensions/string.extensions.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
+import 'package:cgpa_calculator/ui/views/auth/controller/auth_controller.dart';
 import 'package:cgpa_calculator/ui/views/auth/login_view.dart';
 import 'package:cgpa_calculator/ui/views/auth/signup_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -44,13 +46,23 @@ class AuthView extends StatelessWidget {
               const Gap(20),
               const Divider(),
               const Gap(20),
-              AppButton(
-                text: "Continue with Google",
-                icon: const Icon(Icons.lock),
-                color: context.primaryColor,
-                type: ButtonType.outlined,
-                onPressed: () => context.push(const SignupView()),
-              ),
+              Consumer(builder: (context, ref, _) {
+                return AppButton(
+                  text: "Continue with Google",
+                  icon: Row(
+                    children: [
+                      Image.asset(
+                        "google".png,
+                        height: 24,
+                      ),
+                      const Gap(10),
+                    ],
+                  ),
+                  color: context.primaryColor,
+                  type: ButtonType.outlined,
+                  onPressed: () => ref.read(authController).googleLogin(),
+                );
+              }),
               const Gap(40),
             ],
           ),

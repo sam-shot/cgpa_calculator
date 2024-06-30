@@ -32,6 +32,7 @@ migrate_working_dir/
 /build/
 /windows/
 /.idx/
+cgpa.jks
 
 # Symbolication related
 app.*.symbols
