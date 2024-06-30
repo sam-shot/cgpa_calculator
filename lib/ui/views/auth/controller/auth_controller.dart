@@ -4,6 +4,7 @@ import 'package:cgpa_calculator/ui/utils/app_navigation.dart';
 import 'package:cgpa_calculator/ui/utils/dialogs.dart';
 import 'package:cgpa_calculator/ui/views/auth/model/login_model.dart';
 import 'package:cgpa_calculator/ui/views/auth/model/signup_model.dart';
+import 'package:cgpa_calculator/ui/views/auth/reset_password_view.dart';
 import 'package:cgpa_calculator/ui/views/bottom_nav/bottom_nav.dart';
 import 'package:cgpa_calculator/ui/views/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,62 @@ class AuthController extends ChangeNotifier {
       } else {
         _dialog.showErrorSheet("An Error occurred");
       }
+    } on AuthException catch (e) {
+      _dialog.showErrorSheet(e.message);
+    }
+    loading = false;
+    notifyListeners();
+    return null;
+  }
+
+  void resetPassword(String email, String password, String otp) async {
+    loading = true;
+    notifyListeners();
+    try {
+      final res = await _api.auth.verifyOTP(
+        type: OtpType.recovery,
+        email: email,
+        token: otp,
+      );
+      if (res.session != null) {
+        final UserResponse res = await _api.auth.updateUser(
+          UserAttributes(password: password),
+        );
+        await ref.read(homeController).loadUser();
+        _nav.go(
+          BottomNavWidget(
+            index: 1,
+          ),
+        );
+        await Future.delayed(Durations.short1);
+
+        _dialog.showSuccessSheet("Password updated!");
+      } else {
+        _dialog.showErrorSheet("An Error occurred");
+      }
+    } on AuthException catch (e) {
+      _dialog.showErrorSheet(e.message);
+    } catch (e) {
+      _dialog.showErrorSheet("An Error occurred");
+    }
+    loading = false;
+    notifyListeners();
+    return null;
+  }
+
+  void forgotPassword(String email) async {
+    if (email.isEmpty) {
+      return _dialog
+          .showErrorSheet("Type your email first, to recover your account!");
+    }
+
+    loading = true;
+    notifyListeners();
+    try {
+      await _api.auth.resetPasswordForEmail(email);
+      _nav.push(ResetPasswordView(
+        email: email,
+      ));
     } on AuthException catch (e) {
       _dialog.showErrorSheet(e.message);
     }

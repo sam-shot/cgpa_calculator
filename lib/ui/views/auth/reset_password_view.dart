@@ -2,21 +2,22 @@ import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/components/button.dart';
 import 'package:cgpa_calculator/ui/components/input.dart';
 import 'package:cgpa_calculator/ui/views/auth/controller/auth_controller.dart';
-import 'package:cgpa_calculator/ui/views/auth/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class LoginView extends ConsumerStatefulWidget {
-  const LoginView({super.key});
+class ResetPasswordView extends ConsumerStatefulWidget {
+  final String email;
+
+  const ResetPasswordView({super.key, required this.email});
 
   @override
-  ConsumerState<LoginView> createState() => _LoginViewState();
+  ConsumerState<ResetPasswordView> createState() => _ResetPasswordViewState();
 }
 
-class _LoginViewState extends ConsumerState<LoginView> {
-  final TextEditingController _emailController = TextEditingController();
+class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,23 +37,29 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 ),
                 const Gap(20),
                 Text(
-                  "LOGIN",
+                  "Reset Password",
                   style: context.bold22,
+                ),
+                const Gap(10),
+                Text(
+                  "An OTP code has been sent to your email, kindly check it to proceed.",
+                  style: context.normal14.copyWith(
+                      color: context.normal14.color!.withOpacity(0.7)),
                 ),
                 const Gap(50),
                 Text(
-                  "Email",
+                  "OTP Code",
                   style: context.normal14,
                 ),
                 const Gap(5),
                 AppTextField(
-                  controller: _emailController,
+                  controller: _otpController,
                   bgColor: Colors.transparent,
-                  hint: "johndoe@gmail.com",
+                  hint: "123456",
                 ),
                 const Gap(20),
                 Text(
-                  "Password",
+                  "New password",
                   style: context.normal14,
                 ),
                 const Gap(5),
@@ -62,27 +69,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   hint: "********",
                   isPassword: true,
                 ),
-                const Gap(6),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () => ref.read(authController).forgotPassword(_emailController.text),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Forgot Password?",
-                        style: context.priNormal14,
-                      ),
-                    ),
-                  ),
-                ),
                 const Gap(120),
                 AppButton(
-                  text: "Login",
+                  text: "Reset Password",
                   loading: ref.watch(authController).loading,
-                  onPressed: () => ref.read(authController).login(LoginModel(
-                      email: _emailController.text,
-                      password: _passwordController.text)),
+                  onPressed: () => ref.read(authController).resetPassword(
+                      widget.email,
+                      _passwordController.text,
+                      _otpController.text),
                 ),
                 const Gap(50),
               ],
