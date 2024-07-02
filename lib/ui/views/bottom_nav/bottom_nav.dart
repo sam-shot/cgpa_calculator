@@ -2,6 +2,7 @@
 
 import 'package:cgpa_calculator/core/extensions/context.extensions.dart';
 import 'package:cgpa_calculator/ui/styles/colors.dart';
+import 'package:cgpa_calculator/ui/views/advise_view/controller/advice_controller.dart';
 import 'package:cgpa_calculator/ui/views/contributors/contributors_view.dart';
 import 'package:cgpa_calculator/ui/views/current_gp/history_provider.dart';
 import 'package:cgpa_calculator/ui/views/home/home_view.dart';
@@ -34,6 +35,7 @@ class _BottomNavWidgetState extends ConsumerState<BottomNavWidget> {
       const SettingsView(),
     ];
     Future(() => ref.read(historyController.notifier).init());
+    Future(() => ref.read(adviseController.notifier).init());
   }
 
   @override
