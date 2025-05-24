@@ -140,7 +140,7 @@ class CalculateGPView extends ConsumerWidget {
                               const Gap(20),
                               Text(
                                 "Please fill in the empty fields",
-                                style: AppTextStyles.boldB(16),
+                                style: context.bold16,
                               ),
                               const Gap(20),
                               AppButton(

@@ -11,9 +11,9 @@ final locator = GetIt.instance;
 Future<void> setupLocator() async {
   await Supabase.initialize(
     debug: kDebugMode,
-    url: 'https://xhknidgfmoiaanrbtadq.supabase.co',
+    url: 'https://dapegreuckurwftbuuqz.supabase.co',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhoa25pZGdmbW9pYWFucmJ0YWRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTkyNzc3MDMsImV4cCI6MjAzNDg1MzcwM30.KlZRAftBaVV754WWLDRbNelmTaIjjib3a4HQf7r1KuI',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhcGVncmV1Y2t1cndmdGJ1dXF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwODQ1OTUsImV4cCI6MjA2MzY2MDU5NX0.wrlRLHcMAP-b1kHmH8sFAvPXUOcYFRxbhbogMpVOCQM',
   );
   ///// DEP
   locator.registerSingleton<DBService>(DBService());

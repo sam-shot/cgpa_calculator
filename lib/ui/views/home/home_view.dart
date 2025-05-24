@@ -4,6 +4,7 @@ import 'package:cgpa_calculator/ui/views/advise_view/advice_view.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/calculate_gp_view.dart';
 import 'package:cgpa_calculator/ui/views/calculate_gp/gp_provider.dart';
 import 'package:cgpa_calculator/ui/views/current_gp/current_gp_view.dart';
+import 'package:cgpa_calculator/ui/views/current_gp/history_provider.dart';
 import 'package:cgpa_calculator/ui/views/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -78,6 +79,29 @@ class HomeView extends ConsumerWidget {
                       },
                     ),
                   ],
+                ),
+                const Gap(50),
+                Text(
+                  "Current Status",
+                  style: context.bold16,
+                ),
+                const Gap(20),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.shade100,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Current CGPA:", style: context.bold16),
+                      Text(
+                        "${ref.watch(historyController).currentCGPA?.toStringAsFixed(2) ?? '--'}",
+                        style: context.bold16,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
